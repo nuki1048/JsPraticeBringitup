@@ -1,8 +1,20 @@
+/* eslint-disable no-undef */
+/* eslint-disable quote-props */
 export default class VideoPlayer {
   constructor(triggers, overlay) {
     this.btns = document.querySelectorAll(triggers);
     this.overlay = document.querySelector(overlay);
     this.close = this.overlay.querySelector('.close');
+  }
+
+  createPlayer(url) {
+    // eslint-disable-next-line no-undef
+    this.player = new YT.Player('frame', {
+      height: '100%',
+      width: '100%',
+      videoId: `${url}`,
+    });
+    this.overlay.style.display = 'flex';
   }
 
   bindTriggers() {
@@ -17,18 +29,8 @@ export default class VideoPlayer {
   bindClose() {
     this.close.addEventListener('click', () => {
       this.overlay.style.display = 'none';
-      this.player.stopVideo();
+      document.querySelector('iframe').remove();
     });
-  }
-
-  createPlayer(url) {
-    // eslint-disable-next-line no-undef
-    this.player = new YT.Player('frame', {
-      height: '100%',
-      width: '100%',
-      videoId: `${url}`,
-    });
-    this.overlay.style.display = 'flex';
   }
 
   init() {
@@ -36,6 +38,7 @@ export default class VideoPlayer {
     tag.src = 'https://www.youtube.com/iframe_api';
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
     this.bindTriggers();
     this.bindClose();
   }
