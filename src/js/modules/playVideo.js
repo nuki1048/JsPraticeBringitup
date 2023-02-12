@@ -8,12 +8,17 @@ export default class VideoPlayer {
   }
 
   createPlayer(url) {
-    // eslint-disable-next-line no-undef
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     this.player = new YT.Player('frame', {
       height: '100%',
       width: '100%',
       videoId: `${url}`,
+      playerVars: { 'autoplay': 1, 'controls': 0 },
     });
+
     this.overlay.style.display = 'flex';
   }
 
@@ -21,6 +26,7 @@ export default class VideoPlayer {
     this.btns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const path = btn.getAttribute('data-url');
+
         this.createPlayer(path);
       });
     });
@@ -34,11 +40,6 @@ export default class VideoPlayer {
   }
 
   init() {
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
     this.bindTriggers();
     this.bindClose();
   }

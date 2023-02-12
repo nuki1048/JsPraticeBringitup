@@ -1,40 +1,21 @@
 export default class Slider {
-  constructor(page, btns) {
-    this.page = document.querySelector(page);
-    this.slides = this.page.children;
+  constructor({
+    container = null,
+    btns = null,
+    next = null,
+    prev = null,
+    activeClass = '',
+    animate,
+    autoPlay,
+  } = {}) {
+    this.container = document.querySelector(container);
+    this.slides = this.container.children;
     this.btns = document.querySelectorAll(btns);
     this.slideIndex = 1;
-  }
-
-  showSlides(n) {
-    if (n > this.slides.length) {
-      this.slideIndex = 1;
-    }
-    if (n < 1) {
-      this.slideIndex = this.slides.length;
-    }
-    Array.from(this.slides).forEach((slide) => {
-      slide.style.display = 'none';
-    });
-    this.slides[this.slideIndex - 1].style.display = 'block';
-  }
-
-  pluseSlides(n) {
-    this.showSlides(this.slideIndex += n);
-  }
-
-  render() {
-    this.btns.forEach((item) => {
-      item.addEventListener('click', () => {
-        this.pluseSlides(1);
-      });
-      item.parentNode.previousElementSibling.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.slideIndex = 1;
-        this.showSlides(this.slideIndex);
-      });
-    });
-
-    this.showSlides(this.slideIndex);
+    this.prev = document.querySelector(prev);
+    this.next = document.querySelector(next);
+    this.activeClass = activeClass;
+    this.animate = animate;
+    this.autoPlay = autoPlay;
   }
 }
