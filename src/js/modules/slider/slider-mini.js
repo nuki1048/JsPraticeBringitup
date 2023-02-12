@@ -2,28 +2,54 @@ import Slider from '../slider';
 
 export default class MiniSlider extends Slider {
   // eslint-disable-next-line no-useless-constructor
-  constructor(container, next, prev, activeClass, animate, autoPlay) {
-    super(container, next, prev, activeClass, animate, autoPlay);
+  constructor(container, next, prev, activeClass, animate, autoPlay, element) {
+    super(container, next, prev, activeClass, animate, autoPlay, element);
+  }
+
+  nextSlide() {
+    this.container.appendChild(this.slides[0]);
+    this.decorizeSlides();
+    this.moveButtons();
   }
 
   bindTriggers() {
     this.next.addEventListener('click', () => {
-      this.container.appendChild(this.slides[0]);
-      this.decorizeSlides();
+      this.nextSlide();
     });
     this.prev.addEventListener('click', () => {
       const active = this.slides[this.slides.length - 1];
       this.container.insertBefore(active, this.slides[0]);
       this.decorizeSlides();
+      this.moveButtons();
+    });
+  }
+
+  moveButtons() {
+    Array.from(this.slides).forEach((item, i) => {
+      if (item.tagName === 'BUTTON') {
+        this.container.appendChild(this.slides[i]);
+      }
+    });
+    //  This is not my decision, I don't know how to do it differently
+  }
+
+  animationSlides() {
+    let anim = setInterval(() => {
+      this.nextSlide();
+    }, 5000);
+    this.container.addEventListener('mouseenter', () => {
+      clearInterval(anim);
+    });
+    this.container.addEventListener('mouseleave', () => {
+      anim = setInterval(() => {
+        this.nextSlide();
+      }, 5000);
     });
   }
 
   decorizeSlides() {
-    const newArr = Array.from(this.slides).filter((element) => element.getElementsByTagName('div'));
-    console.log(newArr);
-    newArr.forEach((item) => {
+    Array.from(this.slides).forEach((item) => {
       item.classList.remove(this.activeClass);
-
       if (this.animate) {
         item.querySelector('.card__title').style.opacity = '0.4';
         item.querySelector('.card__controls-arrow').style.opacity = '0';
@@ -45,5 +71,9 @@ export default class MiniSlider extends Slider {
    `;
     this.bindTriggers();
     this.decorizeSlides();
+
+    if (this.autoPlay) {
+      this.animationSlides();
+    }
   }
 }

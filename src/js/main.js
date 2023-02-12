@@ -24,6 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
     prev: '.modules__info-btns .slick-prev',
     activeClass: 'card-active',
     animate: true,
+    autoPlay: true,
 
   });
   const feedSlider = new MiniSlider({
@@ -31,6 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
     next: '.feed__slider .slick-next',
     prev: '.feed__slider .slick-prev',
     activeClass: 'feed__item-active',
+
   });
   showUpSlider.init();
   modulesSlider.init();
