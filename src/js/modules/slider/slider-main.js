@@ -1,9 +1,9 @@
-import Slider from '../slider';
+import Slider from './slider';
 
 export default class MainSlider extends Slider {
   // eslint-disable-next-line no-useless-constructor
-  constructor(btns) {
-    super(btns);
+  constructor(btns, nextModule, prevModule) {
+    super(btns, nextModule, prevModule);
   }
 
   showSlides(n) {
@@ -23,18 +23,41 @@ export default class MainSlider extends Slider {
     this.showSlides(this.slideIndex += n);
   }
 
-  render() {
+  bindTriggers() {
     this.btns.forEach((item) => {
       item.addEventListener('click', () => {
         this.pluseSlides(1);
       });
       item.parentNode.previousElementSibling.addEventListener('click', (e) => {
         e.preventDefault();
-        this.slideIndex = 1;
-        this.showSlides(this.slideIndex);
+        if (e.path[1].tagName === 'A') {
+          this.slideIndex = 1;
+          this.showSlides(this.slideIndex);
+        }
       });
     });
+    try {
+      this.prevModule.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          this.pluseSlides(-1);
+        });
+      });
+      this.nextModule.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          this.pluseSlides(1);
+        });
+      });
+    } catch (error) { /* empty */ }
+  }
 
-    this.showSlides(this.slideIndex);
+  render() {
+    if (this.container) {
+      this.showSlides(this.slideIndex);
+      this.bindTriggers();
+    }
   }
 }

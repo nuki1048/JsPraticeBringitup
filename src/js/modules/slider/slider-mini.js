@@ -1,4 +1,4 @@
-import Slider from '../slider';
+import Slider from './slider';
 
 export default class MiniSlider extends Slider {
   // eslint-disable-next-line no-useless-constructor
@@ -63,17 +63,19 @@ export default class MiniSlider extends Slider {
   }
 
   init() {
-    this.container.style.cssText = `
+    try {
+      this.container.style.cssText = `
       display: flex;
       flex-wrap: wrap;
       overflow: hidden;
       align-items: flex-start;
    `;
-    this.bindTriggers();
-    this.decorizeSlides();
+      this.bindTriggers();
+      this.decorizeSlides();
 
-    if (this.autoPlay) {
-      this.animationSlides();
-    }
+      if (this.autoPlay) {
+        this.animationSlides();
+      }
+    } catch (error) { /* empty */ }
   }
 }
