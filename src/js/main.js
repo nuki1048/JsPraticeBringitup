@@ -1,8 +1,8 @@
 import MainSlider from './modules/slider/slider-main';
 import ShowBlock from './modules/showBlock';
 import VideoPlayer from './modules/playVideo';
-// import Accordion from './modules/accordion';
 import MiniSlider from './modules/slider/slider-mini';
+import Difference from './modules/difference';
 
 window.addEventListener('DOMContentLoaded', () => {
   new MainSlider({ btns: '.next', container: '.page' }).render();
@@ -10,6 +10,8 @@ window.addEventListener('DOMContentLoaded', () => {
   //  new Slider('.moduleapp', '.next').render();
   new ShowBlock('.hanson', '.modules').render();
   new VideoPlayer('.showup .play', '.overlay').init();
+  const oldDifferenceBlock = new Difference('.officerold', '.officer__card-item');
+  const newDifferenceBlock = new Difference('.officernew', '.officer__card-item');
   const showUpSlider = new MiniSlider({
     container: '.showup__content-slider',
     next: '.showup__next',
@@ -37,5 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
   showUpSlider.init();
   modulesSlider.init();
   feedSlider.init();
+  oldDifferenceBlock.init();
+  newDifferenceBlock.init();
 //   new Accordion('.module__info_show','.module__info-book').in
 });

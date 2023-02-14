@@ -16,7 +16,7 @@
 	// START: Settings for Prettier
 	"prettier.useTabs": true,
 	"prettier.jsxSingleQuote": false,
-	"prettier.tabWidth": 4,
+	"prettier.tabWidth": 3,
 	"prettier.arrowParens": "avoid",
 	"prettier.singleQuote": true
 }
