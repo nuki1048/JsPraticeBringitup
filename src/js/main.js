@@ -3,11 +3,12 @@ import ShowBlock from './modules/showBlock';
 import VideoPlayer from './modules/playVideo';
 import MiniSlider from './modules/slider/slider-mini';
 import Difference from './modules/difference';
+import Forms from './modules/forms';
 
 window.addEventListener('DOMContentLoaded', () => {
   new MainSlider({ btns: '.next', container: '.page' }).render();
 
-  //  new Slider('.moduleapp', '.next').render();
+  const mainForm = new Forms('.form', 'input');
   new ShowBlock('.hanson', '.modules').render();
   new VideoPlayer('.showup .play', '.overlay').init();
   const oldDifferenceBlock = new Difference('.officerold', '.officer__card-item');
@@ -41,5 +42,6 @@ window.addEventListener('DOMContentLoaded', () => {
   feedSlider.init();
   oldDifferenceBlock.init();
   newDifferenceBlock.init();
+  mainForm.init();
 //   new Accordion('.module__info_show','.module__info-book').in
 });
